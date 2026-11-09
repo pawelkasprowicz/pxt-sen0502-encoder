@@ -9,7 +9,8 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "sen0502.ts"
     ],
     "testFiles": [
         "test.ts"

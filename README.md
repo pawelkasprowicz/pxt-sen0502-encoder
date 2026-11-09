@@ -1,24 +1,100 @@
 
-> Otwórz tę stronę na [https://pawelkasprowicz.github.io/pxt-sen0502-encoder/](https://pawelkasprowicz.github.io/pxt-sen0502-encoder/)
+# DFRobot SEN0502 – enkoder obrotowy dla micro:bit
 
-## Użyj jako rozszerzenia
+![Enkoder DFRobot SEN0502](dfrobot%20sen0502.png)
 
-To repozytorium można dodać jako **rozszerzenie** w MakeCode.
 
-* otwórz [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* kliknij na **Nowy Projekt**
-* kliknij **Rozszerzenia** w menu oznaczonym kołem zębatym
-* szukaj **https://github.com/pawelkasprowicz/pxt-sen0502-encoder** i importuj
+Rozszerzenie Microsoft MakeCode do obsługi enkodera obrotowego DFRobot Gravity SEN0502 przez magistralę I2C.
 
-## Edytuj ten projekt
+## Funkcje
 
-Aby edytować to repozytorium w MakeCode.
+- Odczyt wartości enkodera od 0 do 1023
+- Ustawianie wartości enkodera
+- Odczyt i ustawianie wartości procentowej (0–100%)
+- Sterowanie wbudowanym paskiem LED poprzez ustawienie wartości
+- Ustawianie kroku enkodera
+- Zliczanie kroków obrotu w prawo i w lewo
+- Zdarzenie obrotu w prawo
+- Zdarzenie obrotu w lewo
+- Zdarzenie naciśnięcia pokrętła
+- Odczyt stanu przycisku
+- Zerowanie wartości i licznika kroków
+- Zmiana adresu I2C używanego przez bibliotekę
 
-* otwórz [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* kliknij **Importuj**, a następnie **Importuj URL**
-* wklej **https://github.com/pawelkasprowicz/pxt-sen0502-encoder** i kliknij importuj
+## Podłączenie do micro:bit
 
-#### Metadane (używane do wyszukiwania, renderowania)
+| SEN0502 | micro:bit |
+|---------|-----------|
+| VCC     | 3V        |
+| GND     | GND       |
+| SDA     | P20       |
+| SCL     | P19       |
 
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+Domyślny adres I2C: `0x54`.
+
+## Instalacja
+
+1. Otwórz Microsoft MakeCode dla micro:bit.
+2. Otwórz projekt.
+3. Wybierz Rozszerzenia (Extensions).
+4. Wklej adres repozytorium GitHub tej biblioteki.
+5. Dodaj rozszerzenie do projektu.
+
+## Przykładowy program
+
+```typescript
+sen0502.ustawAdres(0x54)
+sen0502.ustawKrok(1)
+sen0502.ustawWartosc(512)
+
+sen0502.onPrawo(function () {
+    basic.showArrow(ArrowNames.East)
+})
+
+sen0502.onLewo(function () {
+    basic.showArrow(ArrowNames.West)
+})
+
+sen0502.onPrzycisk(function () {
+    basic.showIcon(IconNames.Heart)
+})
+```
+
+## Dostępne funkcje
+
+### Enkoder
+
+- `sen0502.odczytajWartosc()`
+- `sen0502.ustawWartosc(wartosc)`
+- `sen0502.wyzeruj()`
+- `sen0502.odczytajLicznik()`
+
+### Procenty
+
+- `sen0502.odczytajProcenty()`
+- `sen0502.ustawProcenty(procent)`
+
+### Zdarzenia
+
+- `sen0502.onPrawo(handler)`
+- `sen0502.onLewo(handler)`
+- `sen0502.onPrzycisk(handler)`
+
+### Przycisk
+
+- `sen0502.nacisnieto()`
+
+### Ustawienia
+
+- `sen0502.ustawAdres(adres)`
+- `sen0502.ustawKrok(krok)`
+
+## Uwagi
+
+Biblioteka wykorzystuje komunikację I2C.
+
+Zdarzenia obrotu są wykrywane przez cykliczny odczyt wartości enkodera. Przy bardzo szybkim obrocie mogą wystąpić ograniczenia wynikające z częstotliwości odczytu.
+
+## Licencja
+
+Do uzupełnienia przed publikacją.
